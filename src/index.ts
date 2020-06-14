@@ -11,6 +11,15 @@ export class JsonRpcUtil {
   }
 
   public static handle(reqJson: any): any {
+    if (Array.isArray(reqJson)) {
+      // array return array
+      return reqJson.map((x) => this.handleSingle(x));
+    } else {
+      return this.handleSingle(reqJson);
+    }
+  }
+
+  public static handleSingle(reqJson: any): any {
     const req = RequestObject.buildFromJson(reqJson);
     const res = this.handleWithResponseJson(req);
     return res.toJson();
