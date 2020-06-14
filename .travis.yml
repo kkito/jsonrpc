@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- node
+install:
+- yarn
+script:
+- npm run build
+- npm run test
+deploy:
+  provider: npm
+  email: kkitokkito@gmail.com
+  api_key:
+    secure: Vhh/ZtLpuYDXxYhmJ3IDivOC2rA4M2TqTteZsJVvChzFFCjtqJRO/Pmc/OXdw+f74aeaqWkC4H58jCeRuRnJtas8I2+ok3kFIXNq3f0ykpWB88O+TiNOIUeC/tqPJ51ltuqno2bYkCjTeoPjuURUVyjyLS+jeRZ/cVIOkBDkPTwOEE2qbCZTwdVLeEgbS6TUFRKbRjPsr4raKUJ2fJWbXLldjDLqK/z5qxszicIflekGBWmHNf6VkwLbPTRNu66yjFzRmpOo7rFVXCSiDxKC6YVGJ5ClnEwtemKxjT5EE0hJCroYwcbb0l+nWFaheLov5aXLfTOv/S+pMXtDFX2ArUk/gKtyYSb+tyjH6+axmPSgsk2NrfTs3oMkYLbuNHV8GW0VywCoEW1MFqjT8a+tMpogGcCiSEWzhwNPUh1QdH2p48aOAiEcHu6lMDO2Es9h18HBEfumDunwMbAnMMwfK3qNTFTZqXoxXaHk8KTMnIHO9TY4CdTLRsxBbNz4jvzkH+pzbyDh1nTtZypQ05K+xmFnow574ldsPHdHEfFw6aUSmS8V7PZNRa2W/Ac9FXADiBK1STmgvox2m7htKrWgXpGsIyjpc/7xnRD3DLTPV5HDD9NSPN3JCFli2MHFr4X4o8RtkDqDQ9vrDNWMleAE7dYmGyB9dkfqLaIR0QAZXd4=
+  on:
+    tags: true
+    repo: kkito/jsonrpc
