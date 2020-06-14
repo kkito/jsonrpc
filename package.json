@@ -1,0 +1,63 @@
+{
+  "name": "jsonrpc",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "repository": "",
+  "author": {
+    "name": "kkito",
+    "email": "kkitokkito@126.com",
+    "url": "http://kkito.cn"
+  },
+  "keywords": [""],
+  "files": ["lib"],
+  "main": "lib/index",
+  "types": "lib/index",
+  "scripts": {
+    "clean": "rimraf lib && rimraf coverage",
+    "format": "prettier --write \"{src,tests}/**/*.ts\" --single-quote --no-semi",
+    "lint": "tslint --force --format verbose \"{src,tests}/**/*.ts\"",
+    "prepublishOnly": "npm run build",
+    "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
+    "build": "tsc --pretty",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "watch": "npm run build -- --watch",
+    "watch:test": "jest --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.13",
+    "coveralls": "^3.1.0",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.10",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.0",
+    "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.ts": [
+      "tslint --fix",
+      "prettier --write --single-quote --no-semi",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testMatch": ["<rootDir>/tests/**/*.ts"],
+    "preset": "ts-jest"
+  }
+}
