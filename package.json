@@ -1,6 +1,6 @@
 {
   "name": "@kkito/jsonrpc",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "js(ts) implement json rpc 2.0",
   "license": "MIT",
   "repository": "",
@@ -16,6 +16,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "lib/index",
   "types": "lib/index",
   "scripts": {
