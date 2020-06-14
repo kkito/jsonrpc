@@ -1,4 +1,4 @@
-import { RpcObject } from "./RpcObject";
+import { RpcObject, _version } from "./RpcObject";
 import { RequestObject } from "./RequestObject";
 import { RpcError } from "./RpcError";
 
@@ -21,5 +21,14 @@ export class ResponseObject extends RpcObject {
 
   public setRequest(request: RequestObject) {
     this.resId = request.getId();
+  }
+
+  public toJson(): any {
+    const result = super.toJson();
+    Object.assign(result, {
+      id: this.resId,
+      result: this.result,
+    });
+    return result;
   }
 }

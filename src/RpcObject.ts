@@ -13,7 +13,9 @@ export const _version = "2.0";
 
 export class RpcObject implements IRpcSerializer {
   public toJson(): any {
-    return {};
+    return {
+      jsonrpc: _version,
+    };
   }
 
   /**
