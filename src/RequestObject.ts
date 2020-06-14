@@ -1,4 +1,5 @@
 import { RpcObject, _version } from "./RpcObject";
+import { RpcError } from "./RpcError";
 
 export class RequestObject extends RpcObject {
   protected id: number;
@@ -10,12 +11,16 @@ export class RequestObject extends RpcObject {
    * @param rquestJson json request object
    */
   public static buildFromJson(reqJson: any): RequestObject {
-    return new RequestObject(
-      reqJson.id,
-      reqJson.method,
-      reqJson.params,
-      reqJson.version
-    );
+    try {
+      return new RequestObject(
+        reqJson.id,
+        reqJson.method,
+        reqJson.params,
+        reqJson.version
+      );
+    } catch (e) {
+      throw RpcError.buildError(RpcError.ErrorInvalidRequest);
+    }
   }
 
   public static buildRequestJson(method: string, ...params: any): any {

@@ -25,10 +25,17 @@ export class ResponseObject extends RpcObject {
 
   public toJson(): any {
     const result = super.toJson();
-    Object.assign(result, {
-      id: this.resId,
-      result: this.result,
-    });
+    if (this.error) {
+      Object.assign(result, {
+        id: this.resId,
+        error: this.error.toJson(),
+      });
+    } else {
+      Object.assign(result, {
+        id: this.resId,
+        result: this.result,
+      });
+    }
     return result;
   }
 }

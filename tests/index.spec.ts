@@ -1,4 +1,5 @@
 import { JsonRpcUtil } from "../src/index";
+import { RpcError } from "../src/RpcError";
 
 test("main pocedure", () => {
   const disp = JsonRpcUtil.getDispatcher();
@@ -40,6 +41,19 @@ test("array request and resp", () => {
   expect(result[0].result).toBe(7);
   expect(result[1].result).toBe(17);
   expect(result[2].result).toBe(27);
+});
+
+test("method missing error", () => {
+  const disp = JsonRpcUtil.getDispatcher();
+  disp.clear();
+  const result = JsonRpcUtil.handle({
+    id: 3,
+    method: "add",
+    version: "2.0",
+    params: [3, 4],
+  });
+  expect(result.id).toBe(3);
+  expect(result.error.code).toBe(RpcError.ErrorMethodNotFound[0]);
 });
 
 test("getDispatcher", () => {

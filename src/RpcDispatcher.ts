@@ -1,4 +1,5 @@
 import { IRpcDispather, IRpcDispatherFunction } from "./RpcObject";
+import { RpcError } from "./RpcError";
 
 export class RpcDispatcher {
   private dispatcherMapping: IRpcDispather;
@@ -17,7 +18,11 @@ export class RpcDispatcher {
     if (func) {
       return func(...args);
     } else {
-      throw new Error("missing method");
+      throw RpcError.buildError(RpcError.ErrorMethodNotFound);
     }
+  }
+
+  public clear() {
+    this.dispatcherMapping = {};
   }
 }

@@ -1,6 +1,7 @@
 import { RequestObject } from "./RequestObject";
 import { RpcDispatcher } from "./RpcDispatcher";
 import { ResponseObject } from "./ResponseObject";
+import { RpcError } from "./RpcError";
 
 // the default dispatcher
 const dispatcher = new RpcDispatcher();
@@ -26,11 +27,18 @@ export class JsonRpcUtil {
   }
 
   public static handleWithResponseJson(req: RequestObject): ResponseObject {
-    const disp = this.getDispatcher();
-    const result = disp.handle(req.getMethod(), ...req.getParams());
     const res = new ResponseObject();
     res.setRequest(req);
-    res.setResult(result);
+    try {
+      const disp = this.getDispatcher();
+      const result = disp.handle(req.getMethod(), ...req.getParams());
+      res.setResult(result);
+    } catch (e) {
+      if (!(e instanceof RpcError)) {
+        e = RpcError.buildError(RpcError.ErrorInternalError);
+      }
+      res.setError(e);
+    }
     return res;
   }
 }
