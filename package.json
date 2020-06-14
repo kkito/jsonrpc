@@ -1,7 +1,7 @@
 {
-  "name": "jsonrpc",
+  "name": "@kkito/jsonrpc",
   "version": "0.0.1",
-  "description": "",
+  "description": "js(ts) implement json rpc 2.0",
   "license": "MIT",
   "repository": "",
   "author": {
@@ -9,8 +9,13 @@
     "email": "kkitokkito@126.com",
     "url": "http://kkito.cn"
   },
-  "keywords": [""],
-  "files": ["lib"],
+  "keywords": [
+    "jsonrpc",
+    "json-rpc 2.0"
+  ],
+  "files": [
+    "lib"
+  ],
   "main": "lib/index",
   "types": "lib/index",
   "scripts": {
@@ -57,7 +62,9 @@
     ]
   },
   "jest": {
-    "testMatch": ["<rootDir>/tests/**/*.ts"],
+    "testMatch": [
+      "<rootDir>/tests/**/*.ts"
+    ],
     "preset": "ts-jest"
   }
 }
