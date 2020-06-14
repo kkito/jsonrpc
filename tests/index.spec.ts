@@ -1,6 +1,6 @@
-import { TestIndex } from "../src/index";
+import { JsonRpcUtil } from "../src/index";
 
-test("getName", () => {
-  const ti = new TestIndex();
-  expect(ti.getName()).toBe("jsonrpc");
+test("getDispatcher", () => {
+  const disp = JsonRpcUtil.getDispatcher();
+  expect(disp).not.toBeNull();
 });
