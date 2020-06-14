@@ -22,6 +22,6 @@ export class RpcObject implements IRpcSerializer {
    * generate id
    */
   protected static nextId(): number {
-    return nextId++;
+    return ++nextId;
   }
 }
