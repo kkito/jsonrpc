@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "js(ts) implement json rpc 2.0",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/kkito/jsonrpc",
   "author": {
     "name": "kkito",
     "email": "kkitokkito@126.com",
