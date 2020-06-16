@@ -1,7 +1,6 @@
 ### v0.1.0
 
 - implement all errors
-- implement custom errors
 - unit test cover
 - update README with code sample
 
@@ -12,3 +11,4 @@
 - client usage
 - server usage
 - export not only class but interface also, all set/get return interface
+- implement custom errors
