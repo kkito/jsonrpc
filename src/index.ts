@@ -4,12 +4,21 @@ import { ResponseObject } from "./ResponseObject";
 import { RpcError } from "./RpcError";
 
 // the default dispatcher
-const dispatcher = new RpcDispatcher();
+let dispatcher = new RpcDispatcher();
 export { RequestObject, RpcDispatcher, ResponseObject, RpcError };
 
 export class JsonRpcUtil {
   public static getDispatcher(): RpcDispatcher {
     return dispatcher;
+  }
+
+  /**
+   * if want set custom dispatcher
+   * @param disp instance of RpcDispatcher
+   */
+  public static setDispatcher(disp: RpcDispatcher): RpcDispatcher {
+    dispatcher = disp;
+    return this.getDispatcher();
   }
 
   public static handle(reqJson: any): any {
