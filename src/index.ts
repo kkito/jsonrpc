@@ -5,6 +5,7 @@ import { RpcError } from "./RpcError";
 
 // the default dispatcher
 const dispatcher = new RpcDispatcher();
+export { RequestObject, RpcDispatcher, ResponseObject, RpcError };
 
 export class JsonRpcUtil {
   public static getDispatcher(): RpcDispatcher {
