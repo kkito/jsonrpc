@@ -10,6 +10,8 @@ test("main pocedure", () => {
     version: "2.0",
     params: [3, 4],
   });
+  // // tslint:disable-next-line:no-console
+  // console.log(result);
   expect(result.id).toBe(1);
   expect(result.result).toBe(7);
 });
