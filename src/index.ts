@@ -30,6 +30,17 @@ export class JsonRpcUtil {
     }
   }
 
+  public static handleFromString(jsonStr: string): any {
+    try {
+      const reqJson = JSON.parse(jsonStr);
+      return this.handle(reqJson);
+    } catch (e) {
+      const res = new ResponseObject();
+      res.setError(RpcError.buildError(RpcError.ErrorParse));
+      return res.toJson();
+    }
+  }
+
   public static handleSingle(reqJson: any): any {
     const req = RequestObject.buildFromJson(reqJson);
     const res = this.handleWithResponseJson(req);

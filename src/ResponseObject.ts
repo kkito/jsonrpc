@@ -27,7 +27,7 @@ export class ResponseObject extends RpcObject {
     const result = super.toJson();
     if (this.error) {
       Object.assign(result, {
-        id: this.resId,
+        id: this.resId || null,
         error: this.error.toJson(),
       });
     } else {

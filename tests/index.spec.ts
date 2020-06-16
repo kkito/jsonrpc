@@ -1,15 +1,16 @@
 import { JsonRpcUtil } from "../src/index";
 import { RpcError } from "../src/RpcError";
 
+const sampleReq = {
+  id: 1,
+  method: "add",
+  version: "2.0",
+  params: [3, 4],
+};
 test("main pocedure", () => {
   const disp = JsonRpcUtil.getDispatcher();
   disp.add("add", (a, b) => a + b);
-  const result = JsonRpcUtil.handle({
-    id: 1,
-    method: "add",
-    version: "2.0",
-    params: [3, 4],
-  });
+  const result = JsonRpcUtil.handle(sampleReq);
   // // tslint:disable-next-line:no-console
   // console.log(result);
   expect(result.id).toBe(1);
@@ -61,4 +62,14 @@ test("method missing error", () => {
 test("getDispatcher", () => {
   const disp = JsonRpcUtil.getDispatcher();
   expect(disp).not.toBeNull();
+});
+
+test("handleFromString", () => {
+  const disp = JsonRpcUtil.getDispatcher();
+  disp.add("add", (a, b) => a + b);
+  let result = JsonRpcUtil.handleFromString(JSON.stringify(sampleReq));
+  expect(result.result).toBe(7);
+  result = JsonRpcUtil.handleFromString("{indalid json string");
+  expect(result.id).toBeNull();
+  expect(result.error.code).toBe(RpcError.ErrorParse[0]);
 });

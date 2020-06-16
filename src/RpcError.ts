@@ -1,6 +1,7 @@
 import { IRpcSerializer } from "./RpcObject";
 
 export class RpcError extends Error implements IRpcSerializer {
+  // https://www.jsonrpc.org/specification#error_object
   public static readonly ErrorParse: [number, string] = [-32700, "Parse error"];
   public static readonly ErrorInvalidRequest: [number, string] = [
     -32600,
