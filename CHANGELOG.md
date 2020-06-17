@@ -1,3 +1,7 @@
+### v0.2.0
+
+- client usage
+
 ### v0.1.0
 
 - implement all errors
