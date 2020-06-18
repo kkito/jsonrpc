@@ -3,7 +3,7 @@ import { RpcError } from "./RpcError";
 
 export class RequestObject extends RpcObject {
   protected id: number;
-  protected version: string;
+  protected version?: string;
   protected method: string;
   protected params: any;
   /**
@@ -32,7 +32,7 @@ export class RequestObject extends RpcObject {
     };
   }
 
-  constructor(id: number, method: string, params: any, version: string) {
+  constructor(id: number, method: string, params: any, version?: string) {
     super();
     this.id = id;
     this.method = method;
@@ -51,5 +51,15 @@ export class RequestObject extends RpcObject {
 
   public getParams(): any[] {
     return this.params;
+  }
+
+  public toJson() {
+    const result = super.toJson();
+    Object.assign(result, {
+      id: this.id,
+      method: this.method,
+      params: this.params,
+    });
+    return result;
   }
 }

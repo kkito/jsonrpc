@@ -25,9 +25,11 @@ export class RpcError extends Error implements IRpcSerializer {
   }
 
   protected errorCode: number;
-  constructor(errorCode: number, msg: string) {
+  protected originResponse?: any;
+  constructor(errorCode: number, msg: string, response: any = null) {
     super(msg);
     this.errorCode = errorCode;
+    this.originResponse = response;
   }
   public toJson(): any {
     return {

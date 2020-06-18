@@ -1,82 +1,39 @@
+import { RequestObject, RpcError } from ".";
+import { _version } from "./RpcObject";
+
 export interface IClientRequest {
-  request(method: string, ...args: any[]): Promise<any>;
+  request(rpsJson: any): Promise<any>;
 }
-interface LooseObject {
+interface IProxyStub {
   [key: string]: (...args: any[]) => Promise<any>;
 }
 
+/**
+ * make a proxy to as client
+ * if any method called ,and intercept with method and params to build request content
+ */
 export class RpcClient {
-  // tslint:disable-next-line:variable-name
-  protected __client: IClientRequest;
-
-  public static build(client: IClientRequest): LooseObject {
-    const target: LooseObject = {};
-    const resultProxy = new Proxy(target, new RpcClient(client));
+  public static build(client: IClientRequest): IProxyStub {
+    const target: IProxyStub = {
+      // the request can be any like axios, fetch etc, pass it from outside
+      // the real request function set here
+      // Is it a right way?
+      __client: client.request,
+    };
+    const resultProxy = new Proxy(target, new RpcClient());
     return resultProxy;
   }
 
-  constructor(client: IClientRequest) {
-    this.__client = client;
-  }
-
   public get(target: any, name: string, receiver: RpcClient) {
-    // tslint:disable-next-line:no-console
-    console.log("========= get!!!");
-    // tslint:disable-next-line:no-console
-    console.log(target);
-    // tslint:disable-next-line:no-console
-    console.log(name);
-    // tslint:disable-next-line:no-console
-    if (name.startsWith("__")) {
-      return Reflect.get(receiver, name, receiver);
-    } else {
-      return (...fargs: any[]) => {
-        // tslint:disable-next-line:no-console
-        console.log(fargs);
-        return 222;
-      };
-    }
-  }
-
-  public apply(target: any, name: any, args: any) {
-    // tslint:disable-next-line:no-console
-    console.log("========= apply!!!");
-    // tslint:disable-next-line:no-console
-    console.log(target);
-    // tslint:disable-next-line:no-console
-    console.log(name);
-    // tslint:disable-next-line:no-console
-    console.log(args);
-    return 5;
+    const req = Reflect.get(target, "__client", receiver);
+    return async (...fargs: any[]) => {
+      const id = RequestObject.nextId();
+      const reqObj = new RequestObject(id, name, fargs, _version);
+      const result = await req(reqObj.toJson());
+      if (result.error) {
+        throw new RpcError(result.error.code, result.error.message, result);
+      }
+      return result;
+    };
   }
 }
-
-// const obj = {
-//   prop1: () => {
-//     return 3;
-//   },
-//   prop2: "hello",
-// };
-
-// const obj2: LooseObject = {};
-
-// const proxy = new Proxy(obj2, {
-//   get: (target, name) => {
-//     return 5;
-//   },
-// });
-
-// proxy.prop1();
-
-const myclient = RpcClient.build({
-  request: async (...args: any[]) => {
-    // tslint:disable-next-line:no-console
-    console.log(args);
-    return 0;
-  },
-});
-
-// tslint:disable-next-line:no-console
-console.log(myclient.add(3, 4));
-// tslint:disable-next-line:no-console
-console.log(myclient.__client);
