@@ -16,7 +16,9 @@ const mockErrorHttp = {
   },
 };
 test("call remote", async (done) => {
-  const proxy = RpcClient.build(mockHttp);
+  const proxy = RpcClient.build(mockHttp, {
+    responseResult: false,
+  });
   const reuslt = await proxy.add(3, 4);
   expect(reuslt.id).toBe(1);
   expect(reuslt.method).toEqual("add");
@@ -26,6 +28,17 @@ test("call remote", async (done) => {
   expect(reuslt2.id).toBe(2);
   expect(reuslt2.method).toEqual("multi");
   expect(reuslt2.params).toEqual([5, 4]);
+  done();
+});
+
+test.only("call remote return result", async (done) => {
+  const proxy = RpcClient.build({
+    request: async (_: any) => {
+      return { result: 100 };
+    },
+  });
+  const reuslt = await proxy.add(3, 4);
+  expect(reuslt).toBe(100);
   done();
 });
 

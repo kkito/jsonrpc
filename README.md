@@ -18,6 +18,8 @@ we can
 
 ### sample
 
+server side
+
 ```javascript
 import { JsonRpcUtil } from "@kkito/jsonrpc";
 
@@ -32,4 +34,18 @@ const result = JsonRpcUtil.handle({
 
 // { jsonrpc: '2.0', id: 1, result: 7 }
 console.log(result);
+```
+
+client side
+
+```javascript
+import axios from "axios";
+
+const proxy = RpcClient.build({
+  request: async (jsonReq) => {
+    return axios.post("/the_endpoint", jsonReq);
+  },
+});
+
+const result = await proxy.add(3, 4);
 ```
