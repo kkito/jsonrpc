@@ -2,10 +2,11 @@ import { RequestObject } from "./RequestObject";
 import { RpcDispatcher } from "./RpcDispatcher";
 import { ResponseObject } from "./ResponseObject";
 import { RpcError } from "./RpcError";
+import { RpcClient } from "./RpcClient";
 
 // the default dispatcher
 let dispatcher = new RpcDispatcher();
-export { RequestObject, RpcDispatcher, ResponseObject, RpcError };
+export { RequestObject, RpcDispatcher, ResponseObject, RpcError, RpcClient };
 
 export class JsonRpcUtil {
   public static getDispatcher(): RpcDispatcher {
