@@ -17,3 +17,5 @@
 - export not only class but interface also, all set/get return interface
 - implement custom errors
 - response s Notification
+- handler an async function
+- error handler for async function
