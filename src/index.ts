@@ -67,7 +67,9 @@ export class JsonRpcUtil {
   }
 
   public static async asyncHandleSingle(reqJson: any): Promise<any> {
-    return this.handleSingle(reqJson);
+    const result = this.handleSingle(reqJson);
+    result.result = await result.result;
+    return result;
   }
 
   public static handleSingle(reqJson: any): any {
