@@ -150,3 +150,22 @@ test("test async handle", async (done) => {
   expect(result3[1].result).toBe(12);
   done();
 });
+
+test.only("test async error handle", async (done) => {
+  const disp = JsonRpcUtil.getDispatcher();
+  disp.clear();
+  disp.add("asyncAdd", async (a, b) => {
+    return new Promise(() => {
+      throw new Error(`test error ${a} , ${b}`);
+    });
+  });
+
+  const result = await JsonRpcUtil.asyncHandle({
+    id: 3,
+    method: "asyncAdd",
+    version: "2.0",
+    params: [3, 4],
+  });
+  expect(result.error.code).toBe(RpcError.ErrorInternalError[0]);
+  done();
+});

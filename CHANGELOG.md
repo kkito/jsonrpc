@@ -1,6 +1,8 @@
 ### v0.2.0
 
 - client usage
+- handler an async function
+- error handler for async function
 
 ### v0.1.0
 
@@ -17,5 +19,3 @@
 - export not only class but interface also, all set/get return interface
 - implement custom errors
 - response s Notification
-- handler an async function
-- error handler for async function

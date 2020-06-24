@@ -32,15 +32,22 @@ export class JsonRpcUtil {
   }
 
   public static async asyncHandle(reqJson: any): Promise<any> {
-    if (Array.isArray(reqJson)) {
-      // array return array
-      const result = [];
-      for (const req of reqJson) {
-        result.push(await this.asyncHandleSingle(req));
+    try {
+      if (Array.isArray(reqJson)) {
+        // array return array
+        const result = [];
+        for (const req of reqJson) {
+          result.push(await this.asyncHandleSingle(req));
+        }
+        return result;
+      } else {
+        const result = await this.asyncHandleSingle(reqJson);
+        return result;
       }
-      return result;
-    } else {
-      return this.asyncHandleSingle(reqJson);
+    } catch (e) {
+      const res = new ResponseObject();
+      res.setError(RpcError.buildError(RpcError.ErrorInternalError));
+      return res.toJson();
     }
   }
 
