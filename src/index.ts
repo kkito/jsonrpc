@@ -31,6 +31,19 @@ export class JsonRpcUtil {
     }
   }
 
+  public static async asyncHandle(reqJson: any): Promise<any> {
+    if (Array.isArray(reqJson)) {
+      // array return array
+      const result = [];
+      for (const req of reqJson) {
+        result.push(await this.asyncHandleSingle(req));
+      }
+      return result;
+    } else {
+      return this.asyncHandleSingle(reqJson);
+    }
+  }
+
   public static handleFromString(jsonStr: string): any {
     try {
       const reqJson = JSON.parse(jsonStr);
@@ -40,6 +53,21 @@ export class JsonRpcUtil {
       res.setError(RpcError.buildError(RpcError.ErrorParse));
       return res.toJson();
     }
+  }
+
+  public static async asyncHandleFromString(jsonStr: string): Promise<any> {
+    try {
+      const reqJson = JSON.parse(jsonStr);
+      return this.asyncHandle(reqJson);
+    } catch (e) {
+      const res = new ResponseObject();
+      res.setError(RpcError.buildError(RpcError.ErrorParse));
+      return res.toJson();
+    }
+  }
+
+  public static async asyncHandleSingle(reqJson: any): Promise<any> {
+    return this.handleSingle(reqJson);
   }
 
   public static handleSingle(reqJson: any): any {
