@@ -100,3 +100,51 @@ test("test async handle", async (done) => {
   expect(result2.result).toBe(7);
   done();
 });
+
+test("test async handle", async (done) => {
+  const disp = JsonRpcUtil.getDispatcher();
+  disp.clear();
+  disp.add("asyncAdd", async (a, b) => {
+    return new Promise((resolve) => {
+      resolve(a + b);
+    });
+  });
+  disp.add("asyncMulti", async (a, b) => {
+    return new Promise((resolve) => {
+      resolve(a * b);
+    });
+  });
+  const result = JsonRpcUtil.handle({
+    id: 3,
+    method: "asyncAdd",
+    version: "2.0",
+    params: [3, 4],
+  });
+  expect(util.types.isPromise(result.result)).toBeTruthy();
+
+  const result2 = await JsonRpcUtil.asyncHandle({
+    id: 3,
+    method: "asyncAdd",
+    version: "2.0",
+    params: [3, 4],
+  });
+  expect(result2.result).toBe(7);
+  // multi async
+  const result3 = await JsonRpcUtil.asyncHandle([
+    {
+      id: 3,
+      method: "asyncAdd",
+      version: "2.0",
+      params: [3, 4],
+    },
+    {
+      id: 4,
+      method: "asyncMulti",
+      version: "2.0",
+      params: [3, 4],
+    },
+  ]);
+  expect(result3[0].result).toBe(7);
+  expect(result3[1].result).toBe(12);
+  done();
+});
