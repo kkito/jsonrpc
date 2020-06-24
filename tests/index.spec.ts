@@ -8,14 +8,16 @@ const sampleReq = {
   version: "2.0",
   params: [3, 4],
 };
-test("main pocedure", () => {
+test("main pocedure", async (done) => {
   const disp = JsonRpcUtil.getDispatcher();
   disp.add("add", (a, b) => a + b);
   const result = JsonRpcUtil.handle(sampleReq);
-  // // tslint:disable-next-line:no-console
-  // console.log(result);
   expect(result.id).toBe(1);
   expect(result.result).toBe(7);
+  // async handle call sync function works
+  const result2 = await JsonRpcUtil.asyncHandle(sampleReq);
+  expect(result2.result).toBe(7);
+  done();
 });
 
 test("array request and resp", () => {

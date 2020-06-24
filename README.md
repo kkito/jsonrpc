@@ -34,6 +34,16 @@ const result = JsonRpcUtil.handle({
 
 // { jsonrpc: '2.0', id: 1, result: 7 }
 console.log(result);
+
+// deal with async
+const asyncResult = JsonRpcUtil.asyncHandle({
+  id: 1,
+  method: "asyncAdd",
+  version: "2.0",
+  params: [3, 4],
+});
+// { jsonrpc: '2.0', id: 1, result: 7 }
+console.log(asyncResult);
 ```
 
 client side
